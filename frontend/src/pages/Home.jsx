@@ -1,32 +1,30 @@
-import { useState, useMemo } from "react";
+// src/pages/Home.jsx
+import { useState, useMemo, useEffect } from "react";
 import MovieCard from "../components/MovieCard";
 import "../css/Home.css";
+import "../css/MovieCard.css";
+import { getPopularMovies, searchMovies } from "../services/api"; // <-- add searchMovies
 
 function Home() {
   const [searchQuery, setSearchQuery] = useState("");
+  const [movies, setMovies] = useState([]);
+  const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(true);
 
-  // Add poster URLs because MovieCard expects movie.url
-  const movies = [
-    {
-      id: 1,
-      title: "John Wick",
-      release_date: "2020",
-      url: "/images/john-wick.jpg",
-    },
-    {
-      id: 2,
-      title: "Ballerina",
-      release_date: "2025",
-      url: "/images/ballerina.jpg",
-    },
-    { id: 3, title: "F1", release_date: "2025", url: "/images/f1.jpg" },
-    {
-      id: 4,
-      title: "Weapons",
-      release_date: "2025",
-      url: "/images/weapons.jpg",
-    },
-  ];
+  useEffect(() => {
+    const loadPopularMovies = async () => {
+      try {
+        const popularMovies = await getPopularMovies();
+        setMovies(popularMovies);
+      } catch (err) {
+        console.error(err);
+        setError("Failed to load movies...");
+      } finally {
+        setLoading(false);
+      }
+    };
+    loadPopularMovies();
+  }, []);
 
   const q = searchQuery.trim().toLowerCase();
 
@@ -36,9 +34,23 @@ function Home() {
     return movies.filter((m) => m.title.toLowerCase().startsWith(q));
   }, [q, movies]);
 
-  const handleSearch = (e) => {
+  const handleSearch = async (e) => {
     e.preventDefault();
-    // keep the user's query; don't overwrite it with "...."
+    const query = searchQuery.trim();
+    if (!query || loading) return;
+
+    setError(null);
+    setLoading(true);
+    try {
+      const searchResults = await searchMovies(query);
+      setMovies(searchResults);
+    } catch (err) {
+      console.error(err);
+      setError("Failed to search movies...");
+    } finally {
+      setLoading(false);
+    }
+    setSearchQuery("");
   };
 
   return (
@@ -56,14 +68,19 @@ function Home() {
         </button>
       </form>
 
-      {/* IMPORTANT: class matches your CSS: .movie-carousel-vertical */}
-      <div className="movie-carousel-vertical">
-        {filtered.length > 0 ? (
-          filtered.map((movie) => <MovieCard movie={movie} key={movie.id} />)
-        ) : (
-          <p className="text-gray-400 px-4">No movies found.</p>
-        )}
-      </div>
+      {error && <div className="error-message">{error}</div>}
+
+      {loading ? (
+        <div className="loading px-4 text-gray-400">Loading…</div>
+      ) : (
+        <div className="movie-carousel-vertical">
+          {filtered.length > 0 ? (
+            filtered.map((movie) => <MovieCard movie={movie} key={movie.id} />)
+          ) : (
+            <p className="text-gray-400 px-4">No movies found.</p>
+          )}
+        </div>
+      )}
     </div>
   );
 }

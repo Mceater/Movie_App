@@ -1,30 +1,19 @@
-/* src/components/Home.css */
 @import "tailwindcss";
 
+/* Page wrapper */
 .home {
-
-  @apply w-full box-border py-4;
-
-  @apply sm:py-8;
+  @apply w-full box-border py-8;
 }
 
+/* Search bar */
 .search-form {
   @apply max-w-[600px] mx-auto mb-8 flex gap-4 px-4 box-border;
-
-  @apply sm:mb-8 mb-4;
 }
-
 .search-input {
   @apply flex-1 px-4 py-3 border-0 rounded-md bg-neutral-800 text-white text-base
          focus:outline-none focus:ring-2 focus:ring-neutral-500;
 }
-
 .search-button {
   @apply px-6 py-3 rounded-md font-medium whitespace-nowrap transition-colors
          text-white bg-[#e50914] hover:bg-[#f40612];
-}
-
-.movies-grid {
-  @apply grid gap-6 p-4 w-full box-border;
-  @apply grid-cols-[repeat(auto-fit,minmax(300px,1fr))];
 }

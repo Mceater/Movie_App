@@ -1,50 +1,29 @@
-/* src/App.css */
 @import "tailwindcss";
 
-/* Root container */
+/* Root container under navbar */
 #root {
-  max-width: 1280px;
+  width: 100%;
+  max-width: 100%;
   margin: 0 auto;
-  padding: 6rem 2rem 2rem; /* ⬅ add top padding so content isn't hidden under fixed navbar */
-  text-align: center;
+
+  /* Add top padding = navbar height so content isn’t hidden */
+  padding: 6rem 0 2rem;
+
+  /* Let components control alignment */
+  text-align: initial;
 }
 
-/* Logo styles (kept from your original) */
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
-}
+/* Optional starter styles you can keep or remove */
+.logo { height: 6em; padding: 1.5em; transition: filter 300ms; }
+.logo:hover { filter: drop-shadow(0 0 2em #646cffaa); }
+.logo.react:hover { filter: drop-shadow(0 0 2em #61dafbaa); }
 
-/* Logo spin animation */
 @keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
 }
-
 @media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
+  a:nth-of-type(2) .logo { animation: logo-spin infinite 20s linear; }
 }
-
-/* Card styles */
-.card {
-  padding: 2em;
-}
-
-/* Docs link text */
-.read-the-docs {
-  color: #888;
-}
+.card { padding: 2em; }
+.read-the-docs { color: #888; }
