@@ -1,0 +1,116 @@
+@import "tailwindcss";
+
+/* Horizontal carousel (Prime-style row) */
+.movie-carousel-vertical {
+  @apply flex flex-row gap-6 overflow-x-auto snap-x snap-mandatory
+         px-8 py-8 w-full h-[80vh];
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+  position: relative; /* Needed for edge gradients */
+}
+
+/* Hide scrollbar */
+.movie-carousel-vertical::-webkit-scrollbar {
+  display: none;
+}
+.movie-carousel-vertical {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Edge fade gradients */
+.movie-carousel-vertical::before,
+.movie-carousel-vertical::after {
+  content: "";
+  pointer-events: none;
+  position: absolute;
+  top: 0;
+  height: 100%;
+  width: 64px; /* fade width */
+  z-index: 20;
+}
+
+/* Left fade */
+.movie-carousel-vertical::before {
+  left: 0;
+  background: linear-gradient(to right, rgb(10 10 10 / 0.95), transparent);
+}
+
+/* Right fade */
+.movie-carousel-vertical::after {
+  right: 0;
+  background: linear-gradient(to left, rgb(10 10 10 / 0.95), transparent);
+}
+
+/* Movie card slide */
+.movie-card {
+  @apply relative flex flex-col rounded-lg overflow-hidden bg-neutral-900
+         transition-transform duration-200 snap-start flex-shrink-0;
+  width: 280px; /* desktop width */
+  height: 100%; /* stretch full carousel height */
+}
+.movie-card:hover {
+  @apply -translate-y-1 scale-[1.03];
+}
+
+/* Poster */
+.movie-poster {
+  @apply relative w-full h-full;
+}
+.movie-poster img {
+  @apply w-full h-full object-cover;
+}
+
+/* Overlay */
+.movie-overlay {
+  @apply absolute inset-0 bg-gradient-to-b from-black/10 to-black/80
+         opacity-0 transition-opacity duration-200 flex flex-col justify-end p-6;
+}
+.movie-card:hover .movie-overlay {
+  @apply opacity-100;
+}
+
+/* Favorite button */
+.favorite-btn {
+  @apply absolute top-4 right-4 text-white text-xl p-2 bg-black/50 rounded-full
+         w-12 h-12 flex items-center justify-center transition-colors duration-200;
+}
+.favorite-btn:hover {
+  @apply bg-black/80;
+}
+.favorite-btn.active {
+  @apply text-red-500;
+}
+
+/* Movie info pinned bottom */
+.movie-info {
+  @apply absolute bottom-0 left-0 right-0
+         p-6 flex flex-col gap-2 bg-black/60 text-white backdrop-blur-sm;
+}
+.movie-info h3 {
+  @apply text-lg font-bold m-0 leading-snug;
+}
+.movie-info p {
+  @apply text-sm text-gray-300;
+}
+
+/* Responsive adjustments */
+@media (max-width: 1024px) {
+  .movie-card {
+    width: 220px;
+  }
+}
+@media (max-width: 768px) {
+  .movie-carousel-vertical {
+    @apply h-[65vh] px-4 py-4;
+  }
+  .movie-card {
+    width: 160px;
+  }
+  .movie-info {
+    @apply p-3;
+  }
+  .favorite-btn {
+    @apply w-10 h-10 text-lg;
+  }
+}
