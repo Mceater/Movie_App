@@ -50,7 +50,7 @@
   height: 100%; /* stretch full carousel height */
 }
 .movie-card:hover {
-  @apply -translate-y-1 scale-[1.03];
+  @apply -translate-y-1 scale-[1.05] shadow-2xl;
 }
 
 /* Poster */
@@ -85,32 +85,5 @@
 /* Movie info pinned bottom */
 .movie-info {
   @apply absolute bottom-0 left-0 right-0
-         p-6 flex flex-col gap-2 bg-black/60 text-white backdrop-blur-sm;
-}
-.movie-info h3 {
-  @apply text-lg font-bold m-0 leading-snug;
-}
-.movie-info p {
-  @apply text-sm text-gray-300;
-}
-
-/* Responsive adjustments */
-@media (max-width: 1024px) {
-  .movie-card {
-    width: 220px;
-  }
-}
-@media (max-width: 768px) {
-  .movie-carousel-vertical {
-    @apply h-[65vh] px-4 py-4;
-  }
-  .movie-card {
-    width: 160px;
-  }
-  .movie-info {
-    @apply p-3;
-  }
-  .favorite-btn {
-    @apply w-10 h-10 text-lg;
-  }
+         p-6 flex flex-col gap-2 bg-black/60 text-white backdrop-blur;
 }

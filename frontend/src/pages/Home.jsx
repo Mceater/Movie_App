@@ -11,6 +11,27 @@ function Home() {
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
 
+  async function fetchData() {
+    const query = searchQuery.trim();
+    if (!query || loading) return;
+
+    setError(null);
+    setLoading(true);
+    try {
+      const searchResults = await searchMovies(query);
+      setMovies(searchResults);
+    } catch (err) {
+      console.error(err);
+      setError("Failed to search movies...");
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  useEffect(() => {
+    fetchData();
+  }, [searchQuery]);
+
   useEffect(() => {
     const loadPopularMovies = async () => {
       try {
@@ -34,38 +55,17 @@ function Home() {
     return movies.filter((m) => m.title.toLowerCase().startsWith(q));
   }, [q, movies]);
 
-  const handleSearch = async (e) => {
-    e.preventDefault();
-    const query = searchQuery.trim();
-    if (!query || loading) return;
-
-    setError(null);
-    setLoading(true);
-    try {
-      const searchResults = await searchMovies(query);
-      setMovies(searchResults);
-    } catch (err) {
-      console.error(err);
-      setError("Failed to search movies...");
-    } finally {
-      setLoading(false);
-    }
-    setSearchQuery("");
-  };
-
   return (
     <div className="home">
-      <form onSubmit={handleSearch} className="search-form">
+      <form className="search-form">
         <input
           type="text"
           placeholder="Search for movies..."
           className="search-input"
           value={searchQuery}
+          // this is to set the setSearchQuery according to the search input
           onChange={(e) => setSearchQuery(e.target.value)}
         />
-        <button type="submit" className="search-button">
-          Search
-        </button>
       </form>
 
       {error && <div className="error-message">{error}</div>}
