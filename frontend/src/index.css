@@ -6,7 +6,6 @@ body {
   display: block;
   min-width: 320px;
   min-height: 100vh;
-
-  /* Global dark background + white text */
-  @apply bg-neutral-950 text-white;
+  background-color: rgb(10 10 10);
+  color: white;
 }
