@@ -3,7 +3,7 @@ import { useState, useMemo, useEffect } from "react";
 import MovieCard from "../components/MovieCard";
 import "../css/Home.css";
 import "../css/MovieCard.css";
-import { getPopularMovies, searchMovies } from "../services/api"; // <-- add searchMovies
+import { getPopularMovies, searchMovies } from "../services/api";
 
 function Home() {
   const [searchQuery, setSearchQuery] = useState("");
@@ -13,43 +13,40 @@ function Home() {
 
   async function fetchData() {
     const query = searchQuery.trim();
-    if (!query || loading) return;
 
     setError(null);
     setLoading(true);
+
     try {
-      const searchResults = await searchMovies(query);
-      setMovies(searchResults);
+      if (!query) {
+        // If query is empty → load popular movies again
+        const popularMovies = await getPopularMovies();
+        setMovies(popularMovies);
+      } else {
+        // Otherwise → search
+        const searchResults = await searchMovies(query);
+        setMovies(searchResults);
+      }
     } catch (err) {
       console.error(err);
-      setError("Failed to search movies...");
+      setError("Failed to load movies...");
     } finally {
       setLoading(false);
     }
   }
 
+  // Re-run fetch whenever query changes
   useEffect(() => {
     fetchData();
   }, [searchQuery]);
 
+  // Initial load (popular movies)
   useEffect(() => {
-    const loadPopularMovies = async () => {
-      try {
-        const popularMovies = await getPopularMovies();
-        setMovies(popularMovies);
-      } catch (err) {
-        console.error(err);
-        setError("Failed to load movies...");
-      } finally {
-        setLoading(false);
-      }
-    };
-    loadPopularMovies();
+    fetchData();
   }, []);
 
   const q = searchQuery.trim().toLowerCase();
 
-  // Show all when query is empty; otherwise filter (startsWith like you had)
   const filtered = useMemo(() => {
     if (!q) return movies;
     return movies.filter((m) => m.title.toLowerCase().startsWith(q));
@@ -57,13 +54,17 @@ function Home() {
 
   return (
     <div className="home">
-      <form className="search-form">
+      <form
+        className="search-form"
+        onSubmit={(e) => {
+          e.preventDefault(); // prevent reload on Enter
+        }}
+      >
         <input
           type="text"
           placeholder="Search for movies..."
           className="search-input"
           value={searchQuery}
-          // this is to set the setSearchQuery according to the search input
           onChange={(e) => setSearchQuery(e.target.value)}
         />
       </form>
