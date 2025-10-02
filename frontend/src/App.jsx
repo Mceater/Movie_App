@@ -8,17 +8,15 @@ import Favorites from "./pages/Favorites";
 export default function App() {
   return (
     <MovieProvider>
-      <div className="min-h-screen bg-black text-white">
+      <div className="app-container">
         <NavBar />
-        <main className="pt-20">
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/favorites" element={<Favorites />} />
-          </Routes>
-        </main>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/favorites" element={<Favorites />} />
+        </Routes>
         <footer className="border-t border-white/10 mt-8">
-          <div className="max-w-[1300px] mx-auto px-6 py-10 text-white/50 text-sm">
-            <div>Netflix-style Movie App • TailwindCSS + Framer Motion</div>
+          <div className="max-w-[1300px] mx-auto px-6 py-10 text-white/50 text-sm text-center">
+            <p>🎬 Movie Discovery App • Built with React + Tailwind CSS + Framer Motion</p>
           </div>
         </footer>
       </div>

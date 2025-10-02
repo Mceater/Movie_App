@@ -1,5 +1,6 @@
-import { useState, useMemo, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import MovieCard from "../components/MovieCard";
+import GenreMovies from "../components/GenreMovies";
 import { getPopularMovies, searchMovies } from "../services/api";
 
 function Home() {
@@ -8,7 +9,7 @@ function Home() {
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  async function fetchData() {
+  const fetchData = useCallback(async () => {
     const query = searchQuery.trim();
     setError(null);
     setLoading(true);
@@ -27,53 +28,84 @@ function Home() {
     } finally {
       setLoading(false);
     }
-  }
+  }, [searchQuery]);
 
   useEffect(() => {
     fetchData();
-  }, [searchQuery]);
-
-  const q = searchQuery.trim().toLowerCase();
-  const filtered = useMemo(() => {
-    if (!q) return movies;
-    return movies.filter((m) => m.title.toLowerCase().startsWith(q));
-  }, [q, movies]);
+  }, [fetchData]);
 
   return (
-    <div className="home w-full py-8">
-      <form
-        className="search-form max-w-[600px] mx-auto mb-8 flex gap-4 px-4"
-        onSubmit={(e) => e.preventDefault()}
-      >
-        <input
-          type="text"
-          placeholder="Search for movies..."
-          className="flex-1 px-4 py-3 rounded-md bg-neutral-800 text-white text-base focus:outline-none focus:ring-2 focus:ring-neutral-500"
-          value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
-        />
-      </form>
+    <main className="page-container">
+      {/* Search Section */}
+      <section aria-label="Search movies">
+        <div className="search-form">
+          <form onSubmit={(e) => e.preventDefault()} role="search">
+            <label htmlFor="movie-search" className="sr-only">
+              Search for movies
+            </label>
+            <input
+              id="movie-search"
+              type="search"
+              placeholder="Search for movies..."
+              className="search-input"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              aria-describedby={error ? "search-error" : undefined}
+            />
+          </form>
+        </div>
 
-      {error && <div className="text-red-500 text-center mb-4">{error}</div>}
+        {error && (
+          <div className="error-message" id="search-error" role="alert">
+            {error}
+          </div>
+        )}
 
-      {loading ? (
-        <div className="text-gray-400 text-center">Loading…</div>
-      ) : (
-        <div className="relative">
-          <div className="pointer-events-none absolute left-0 top-0 bottom-0 w-20 bg-gradient-to-r from-black to-transparent z-10" />
-          <div className="pointer-events-none absolute right-0 top-0 bottom-0 w-20 bg-gradient-to-l from-black to-transparent z-10" />
+        {loading ? (
+          <div className="loading-text" aria-live="polite">
+            <div className="loading-spinner" aria-hidden="true"></div>
+            <p>Loading movies...</p>
+          </div>
+        ) : (
+          <div aria-label={searchQuery.trim() ? "Search results" : "Popular movies"}>
+            {/* Section Title */}
+            <div className="section-header">
+              <h2 className="section-title">
+                {searchQuery.trim() ? `Search Results for "${searchQuery.trim()}"` : "Popular Movies"}
+              </h2>
+              {!searchQuery.trim() && (
+                <p className="section-description">
+                  Trending movies everyone is watching
+                </p>
+              )}
+            </div>
 
-          <div className="movie-carousel-vertical flex gap-4 overflow-x-auto scroll-smooth snap-x snap-mandatory [-ms-overflow-style:none] [scrollbar-width:none] px-6" style={{ WebkitOverflowScrolling: "touch" }}>
-            <style>{`.movie-carousel-vertical::-webkit-scrollbar{display:none}`}</style>
-            {filtered.length > 0 ? (
-              filtered.map((movie) => <MovieCard movie={movie} key={movie.id} />)
+            {movies.length > 0 ? (
+              <div className="movie-carousel" role="list">
+                {movies.map((movie) => (
+                  <div key={movie.id} role="listitem">
+                    <MovieCard movie={movie} />
+                  </div>
+                ))}
+              </div>
             ) : (
-              <p className="text-gray-400 px-4">No movies found.</p>
+              <div className="empty-state">
+                <h3 className="empty-state-title">No movies found</h3>
+                <p className="empty-state-description">
+                  {searchQuery.trim() 
+                    ? `No results for "${searchQuery.trim()}". Try a different search term.`
+                    : "Unable to load movies at this time. Please try again later."
+                  }
+                </p>
+              </div>
             )}
           </div>
-        </div>
-      )}
-    </div>
+        )}
+      </section>
+
+      {/* Genre Movies Section - Only show when not searching */}
+      {!searchQuery.trim() && <GenreMovies />}
+    </main>
   );
 }
 

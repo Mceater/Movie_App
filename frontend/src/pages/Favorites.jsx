@@ -5,24 +5,35 @@ function Favorites() {
   const { favorites } = useMovieContext();
 
   return (
-    <div className="favorites w-full py-8">
-      <div className="max-w-[1300px] mx-auto px-6">
-        <h1 className="text-3xl font-bold mb-8 text-white">My Favorites</h1>
-        
-        {favorites.length === 0 ? (
-          <div className="text-center py-16">
-            <p className="text-gray-400 text-lg mb-4">No favorite movies yet!</p>
-            <p className="text-gray-500">Add some movies to your favorites to see them here.</p>
-          </div>
-        ) : (
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-6">
+    <main className="page-container">
+      <header className="mb-8">
+        <h1 className="text-3xl font-bold text-white">
+          My Favorites
+          {favorites.length > 0 && (
+            <span className="text-lg font-normal text-white/70 ml-2">
+              ({favorites.length} {favorites.length === 1 ? 'movie' : 'movies'})
+            </span>
+          )}
+        </h1>
+      </header>
+      
+      {favorites.length === 0 ? (
+        <div className="empty-state">
+          <h2 className="empty-state-title">No favorite movies yet!</h2>
+          <p className="empty-state-description">
+            Discover movies on the home page and add them to your favorites to see them here.
+          </p>
+        </div>
+      ) : (
+        <section aria-label="Favorite movies">
+          <div className="favorites-grid">
             {favorites.map((movie) => (
               <MovieCard movie={movie} key={movie.id} />
             ))}
           </div>
-        )}
-      </div>
-    </div>
+        </section>
+      )}
+    </main>
   );
 }
 
