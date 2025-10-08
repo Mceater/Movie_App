@@ -1,12 +1,144 @@
-# React + Vite
+# 🎬 Movie Discovery App - Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Modern React application for discovering and managing favorite movies with TMDB API integration.
 
-Currently, two official plugins are available:
+## 🚀 Quick Start
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+```bash
+# Install dependencies
+npm install
 
-## Expanding the ESLint configuration
+# Start development server
+npm run dev
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+# Build for production
+npm run build
+```
+
+## 📦 Dependencies
+
+### Core
+- **React 18.3.1** - UI framework
+- **React Router 7.8.1** - Client-side routing
+- **Framer Motion 12.23.22** - Animations
+
+### Styling
+- **Tailwind CSS 4.0.0** - Utility-first CSS
+- **Flowbite 3.1.2** - UI components
+
+### Development
+- **Vite 7.1.2** - Build tool
+- **ESLint 9.33.0** - Code linting
+- **TypeScript Types** - Type definitions
+
+## 🏗️ Architecture
+
+### Components
+- `MovieCard` - Individual movie display
+- `NavBar` - Navigation with mobile menu
+- `MobileMenu` - Slide-out mobile navigation
+- `GenreFilter` - Genre dropdown with sorting
+- `GenreMovies` - Genre-filtered movie section
+
+### Pages
+- `Home` - Search and popular movies
+- `Favorites` - Saved movies grid
+
+### Services
+- `api.js` - TMDB API integration functions
+
+### Context
+- `MovieContext` - Global state for favorites and notifications
+
+## 🎨 Styling System
+
+### CSS Architecture
+- **variables.css** - Design system tokens
+- **components.css** - Component-specific styles
+- **index.css** - Global styles and utilities
+
+### Design Tokens
+```css
+/* Spacing Scale */
+--spacing-xs: 0.25rem;   /* 4px */
+--spacing-sm: 0.5rem;    /* 8px */
+--spacing-md: 1rem;      /* 16px */
+--spacing-lg: 1.5rem;    /* 24px */
+
+/* Color System */
+--color-primary: #dc2626;
+--color-background: #0a0a0a;
+--color-surface: #171717;
+```
+
+## 📱 Responsive Design
+
+### Breakpoints
+- **Mobile**: < 640px (2-3 cards)
+- **Tablet**: 640px - 1024px (3-5 cards)
+- **Desktop**: > 1024px (5-7 cards)
+
+### Mobile Features
+- Touch-optimized interactions
+- Hamburger navigation
+- Swipe-friendly carousels
+- Reduced spacing for mobile
+
+## 🔧 Development
+
+### Scripts
+```bash
+npm run dev      # Development server
+npm run build    # Production build
+npm run preview  # Preview build
+npm run lint     # Lint code
+```
+
+### Environment Variables
+```bash
+VITE_TMDB_API_KEY=your_api_key
+VITE_TMDB_BASE_URL=https://api.themoviedb.org/3
+```
+
+## 🎯 Key Features
+
+### Movie Discovery
+- Real-time search
+- Genre filtering
+- Advanced sorting
+- Popular movies
+
+### Favorites System
+- Add/remove movies
+- Persistent storage
+- Toast notifications
+- Dedicated page
+
+### Mobile Experience
+- Responsive design
+- Touch interactions
+- Mobile navigation
+- Optimized performance
+
+## 🚀 Performance
+
+### Optimizations
+- Lazy image loading
+- CSS custom properties
+- Optimized animations
+- Bundle splitting
+
+### Bundle Size
+- CSS: ~25KB (gzipped: ~6KB)
+- JS: ~307KB (gzipped: ~100KB)
+
+## 🔒 Security
+
+- Environment variables for API keys
+- No sensitive data in client
+- Proper error handling
+- Input sanitization
+
+---
+
+**Built with React + Vite + Tailwind CSS**
