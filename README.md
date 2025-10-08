@@ -2,7 +2,7 @@
 
 A modern, responsive movie discovery application built with React that allows users to search, explore, and manage their favorite movies using The Movie Database (TMDB) API. Features a sleek dark theme, smooth animations, and mobile-first design.
 
-![Demo](https://imdbwithoutmoney.vercel.app)
+![Demo](https://imdbwithoutmoney.vercel.app/)
 
 ## ✨ Features
 
