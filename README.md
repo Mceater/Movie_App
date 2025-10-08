@@ -2,7 +2,7 @@
 
 A modern, responsive movie discovery application built with React that allows users to search, explore, and manage their favorite movies using The Movie Database (TMDB) API. Features a sleek dark theme, smooth animations, and mobile-first design.
 
-![Movie App Demo](https://via.placeholder.com/800x400/0a0a0a/dc2626?text=Movie+Discovery+App)
+🌐 **[Live Demo](https://imdbwithoutmoney.vercel.app/)** - Try the app now!
 
 ## ✨ Features
 
@@ -65,22 +65,22 @@ A modern, responsive movie discovery application built with React that allows us
 
 2. **Install dependencies**
    ```bash
-   npm install
+npm install
    ```
 
 3. **Set up environment variables**
    ```bash
    # Create .env file
    cp .env.example .env
-   
+
    # Add your TMDB API key
    VITE_TMDB_API_KEY=your_api_key_here
-   VITE_TMDB_BASE_URL=https://api.themoviedb.org/3
+VITE_TMDB_BASE_URL=https://api.themoviedb.org/3
    ```
 
 4. **Start development server**
    ```bash
-   npm run dev
+npm run dev
    ```
 
 5. **Open your browser**
@@ -197,10 +197,15 @@ npm run build        # Creates optimized build
 
 ## 🌐 Deployment
 
-### **Vercel (Recommended)**
-1. Connect your GitHub repository
-2. Add environment variables in Vercel dashboard
-3. Deploy automatically on push
+### **Live Application**
+🎬 **[https://imdbwithoutmoney.vercel.app/](https://imdbwithoutmoney.vercel.app/)** - Fully deployed and ready to use!
+
+### **Vercel Deployment**
+✅ **Already Deployed** - This app is live on Vercel with:
+- Automatic deployments from GitHub
+- Environment variables configured
+- Custom domain setup
+- Production optimizations enabled
 
 ### **Manual Deployment**
 ```bash
