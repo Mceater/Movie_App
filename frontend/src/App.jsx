@@ -4,6 +4,7 @@ import { MovieProvider } from "./contexts/MovieContext";
 import NavBar from "./components/NavBar";
 import Home from "./pages/Home";
 import Favorites from "./pages/Favorites";
+import MovieDetails from "./pages/MovieDetails";
 
 export default function App() {
   return (
@@ -13,6 +14,7 @@ export default function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/favorites" element={<Favorites />} />
+          <Route path="/movie/:movieId" element={<MovieDetails />} />
         </Routes>
         <footer className="border-t border-white/10 mt-8">
           <div className="max-w-[1300px] mx-auto px-6 py-10 text-white/50 text-sm text-center">

@@ -56,3 +56,21 @@ export async function discoverMovies(options = {}) {
   const data = await res.json();
   return data.results;
 }
+
+// Get detailed movie information
+export async function getMovieDetails(movieId) {
+  const res = await fetch(`${BASE_URL}/movie/${movieId}?api_key=${API_KEY}&append_to_response=videos,credits`);
+  if (!res.ok) throw new Error("Failed to fetch movie details");
+  return await res.json();
+}
+
+// Get movie credits (cast and crew)
+export async function getMovieCredits(movieId) {
+  const res = await fetch(`${BASE_URL}/movie/${movieId}/credits?api_key=${API_KEY}`);
+  if (!res.ok) throw new Error("Failed to fetch movie credits");
+  const data = await res.json();
+  return {
+    cast: data.cast.slice(0, 10), // First 10 cast members
+    crew: data.crew.filter(person => ['Director', 'Producer', 'Writer'].includes(person.job))
+  };
+}

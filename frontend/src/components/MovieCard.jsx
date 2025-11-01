@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
 import { useMovieContext } from "../contexts/MovieContext";
 
 function MovieCard({ movie }) {
@@ -22,6 +23,7 @@ function MovieCard({ movie }) {
       role="article"
       aria-label={`${movie.title} (${releaseYear})`}
     >
+      <Link to={`/movie/${movie.id}`} className="movie-card-link">
       <div className="movie-poster">
         <img
           src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
@@ -55,6 +57,7 @@ function MovieCard({ movie }) {
           {releaseYear}
         </p>
       </div>
+      </Link>
     </motion.article>
   );
 }
